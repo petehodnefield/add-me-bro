@@ -77,6 +77,22 @@ const thoughtController = {
             console.log(err);
             res.sendStatus(400);
           });
+    },
+
+    // Create a reaction
+    createReaction({params, body}, res) {
+        // Create a single reaction
+        Thought.create(body.reactionBody, body.username)
+        .then(data => res.json(data))
+        // Push that reacion to a single thought's reactions array field
+        // .then(({_id}) => {
+        //     return  Thought.findOneAndUpdate(
+        //         {},
+        //         {$push: {reactions: _id}},
+        //         {new: true}
+        //     )
+        // })
+        
     }
 
 

@@ -3,7 +3,7 @@ const router = require('express').Router()
 const {
     createThought,
     updateThought,
-    addReaction,
+    createReaction,
     deleteThought,
     removeReaction,
     findAllThoughts,
@@ -21,11 +21,12 @@ router.route('/:userId').post(createThought)
 
 router
     .route('/:userId/:thoughtId')
-    // .put(addReaction)
+    // .put(createReaction)
     .delete(deleteThought)
 
 router
-    .route('/:userId/:thoughtId/:reactionId')
+    .route('/thoughts/:thoughtId/reactions')
+    .post(createReaction)
     // .delete(removeReaction)
 
 module.exports = router

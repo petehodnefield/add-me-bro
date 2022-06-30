@@ -53,7 +53,45 @@ const userController = {
       res.json(deletedUserData)
     })
     .catch(err => res.json(err));
+  },
+
+  addFriend({params, body}, res) {
+    User.findById(
+      {_id: params.userId}
+  )
+  .then((data) => {
+      return User.findOneAndUpdate(
+          {},
+          {$push: {friends: params.friendId}},
+          {new: true}
+      )
+  })
+  .then(dbUser => {
+      res.json(dbUser);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+  },
+
+  removeFriend({params, body}, res) {
+    User.findById({_id: params.userId})
+    .then((data) => {
+      return User.findOneAndUpdate(
+          {},
+          {$pull: {friends: params.friendId}},
+          {new: true}
+      )
+  })
+  .then(dbUser => {
+      res.json(dbUser);
+    })
+    .catch(err => {
+      res.json(err);
+    });
   }
+
+
 }
 
 
