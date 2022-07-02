@@ -1,4 +1,6 @@
 const {Schema, model, Types} = require('mongoose')
+const date = require("date-and-time")
+const now = new Date() 
 
 const ReactionSchema = new Schema(
     {
@@ -17,7 +19,8 @@ const ReactionSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: Date.now()
+            default: Date.now,
+            get: () => date.format(now, 'ddd, MMM DD YYYY')
         }
     },
     {
@@ -37,7 +40,8 @@ const ThoughtSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: Date.now(),
+            default: Date.now,
+            get: () => date.format(now, 'ddd, MMM DD YYYY')
             // TODO: format date on query using a getter method
         },
         username: {

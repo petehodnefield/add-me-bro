@@ -79,22 +79,37 @@ const thoughtController = {
           });
     },
 
-    // Create a reaction
     createReaction({params, body}, res) {
-        // Create a single reaction
-        Thought.create(body.reactionBody, body.username)
-        .then(data => res.json(data))
-        // Push that reacion to a single thought's reactions array field
-        // .then(({_id}) => {
-        //     return  Thought.findOneAndUpdate(
-        //         {},
-        //         {$push: {reactions: _id}},
-        //         {new: true}
-        //     )
-        // })
-        
-    }
+        Thought.findOneAndUpdate(
+          {_id: params.thoughtId},
+          {$push: {reactions: body}},
+          {new: true}
+          )
+      .then(dbUser => {
+          res.json(dbUser);
+        })
+        .catch(err => {
+          res.json(err);
+        });
+      },
 
+      removeReaction({params, body}, res) {  
+        Thought.findById({_id: params.thoughtId})
+            .then((data) => {
+                return Thought.findOneAndDelete(
+                    {},
+                    {$pull: {reactions: params.reactionId}},
+                    {new: true}
+                )
+             })
+            .then(dbUser => {
+                res.json(dbUser);
+            })
+            .catch(err => {
+                res.json(err);
+            });
+        
+      }
 
 }
 
