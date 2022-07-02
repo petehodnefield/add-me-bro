@@ -1,5 +1,4 @@
 const {Schema, model, Types} = require('mongoose')
-// TODO: add dataformat
 
 const UserSchema = new Schema(
     {

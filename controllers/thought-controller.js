@@ -94,21 +94,17 @@ const thoughtController = {
       },
 
       removeReaction({params, body}, res) {  
-        Thought.findById({_id: params.thoughtId})
-            .then((data) => {
-                return Thought.findOneAndDelete(
-                    {},
-                    {$pull: {reactions: params.reactionId}},
-                    {new: true}
-                )
-             })
-            .then(dbUser => {
-                res.json(dbUser);
-            })
-            .catch(err => {
-                res.json(err);
-            });
-        
+        Thought.findOneAndUpdate(
+            {_id: params.thoughtId},
+            {$pull: {reactions:{ _id: params.reactionId} }},
+            {new: true}
+        )
+        .then(dbUser => {
+            res.json(dbUser);
+        })
+        .catch(err => {
+            res.json(err);
+        });
       }
 
 }
